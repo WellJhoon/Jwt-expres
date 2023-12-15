@@ -18,7 +18,7 @@ app.post("/api/login", (req, res) => {
         email: "jhon4369@gmail.com"
     }
 
-    jwt.sign({ user }, 'secretkey', (err, token) => {
+    jwt.sign({ user }, 'secretkey',{expiresIn: '1 day'}, (err, token) => {
         res.json({
             token
         })
@@ -27,9 +27,9 @@ app.post("/api/login", (req, res) => {
 });
 
 //treeh route
-app.post("/api/posts", verifyToken , (req, res) => {
-    jwt.verify(req.token, 'secretKey' , (err, authData) => {
-        if(err) {
+app.post("/api/posts", verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretKey' , (error, authData) => {
+        if(error){
             res.sendStatus(403);
         }else{
             res.json({
